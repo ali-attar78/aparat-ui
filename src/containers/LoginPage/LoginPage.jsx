@@ -15,21 +15,24 @@ import EastIcon from "@mui/icons-material/East";
 import PasswordIcon from "@mui/icons-material/VpnKey";
 import { useState } from "react";
 import dump from "../../components/Dump/dump";
+import Alert from "../../components/Alert/alert";
 import auth_service from "../../services/auth-service";
+
 const LoginPage = () => {
+  const [username, setUsername] = useState("user1@aparat.me");
+  const [password, setPassword] = useState("123456");
+  const [messageError, setMessageError] = useState("");
+  const [error, setError] = useState(false);
 
-
-  const [username,setUsername]=useState('');
-  const [password,setPassword]=useState('');
-  const authService =auth_service();
-
+  const authService = auth_service();
+  let response ='';
 
   return (
-    <Grid container direction="row" justifyContent="center" alignItems="center">
+    <Grid container direction="row" justifyContent="center" alignItems="center" >
       <Helmet>
         <title>صفحه ورود آپارات</title>
       </Helmet>
-      <Grid item xs={12} sm={8} md={6} lg={5} style={{ margin: "12px" }}>
+      <Grid item xs={12} sm={8} md={6} lg={5} style={{ margin: "12px"}}>
         <Grid item xs={12}>
           <Logo />
         </Grid>
@@ -45,6 +48,9 @@ const LoginPage = () => {
           </Button>
         </Grid>
         <Grid item xs={12} marginTop={2}>
+
+         {error ? <Alert show={error} message={messageError} onClose={()=>setError(false)} /> : null}
+
           <Card>
             <Grid
               paddingX={"16px"}
@@ -54,7 +60,7 @@ const LoginPage = () => {
               style={{ borderBottom: "1px solid #eeee" }}
             >
               <Grid item xs={12} md={8} marginBottom={2}>
-                <span>حساب کاربری ندارید ؟</span>
+                <span>در آپارات حساب کاربری ندارید؟ ثبت نام کنید:</span>
               </Grid>
               <Grid item xs={12} md={4}>
                 <Button
@@ -62,7 +68,7 @@ const LoginPage = () => {
                   color="danger"
                   variant="contained"
                   fullWidth
-                  style={{ color: "#ffff" }}
+                  style={{ color: "#ffff",marginBottom:'10px' }}
                 >
                   ایجاد حساب کاربری
                 </Button>
@@ -99,6 +105,8 @@ const LoginPage = () => {
                         sx={{ ml: 1, flex: 1 }}
                         placeholder="ایمیل یا موبایل را وارد کنید"
                         onChange={(e) => setUsername(e.target.value.trim())}
+                        defaultValue={username}
+
                       />
                     </Paper>
 
@@ -120,7 +128,7 @@ const LoginPage = () => {
                         sx={{ ml: 1, flex: 1 }}
                         placeholder="گذرواژه خود را وارد کنید"
                         onChange={(e) => setPassword(e.target.value.trim())}
-
+                        defaultValue={password}
                       />
                     </Paper>
                   </Box>
@@ -132,7 +140,26 @@ const LoginPage = () => {
                     color="danger"
                     fullWidth
                     style={{ color: "#ffff" }}
-                    onClick={async ()=> { const result = await authService.Login(username,password,'/login');console.log(result)}}
+                    onClick={async () => { 
+
+                      if(!username || !password) {
+                        setMessageError("لطفا شماره تلفن/ایمیل و پسورد خود را وارد کنید")
+                        setError(true);
+                        return;
+                      }
+
+                      response = await authService.Login(
+                        username,
+                        password,
+                        "/login"
+                      );
+                      if (response.error) {
+                        setMessageError("اطلاعات وارد شده مطابقت ندارد");
+                        setError(true);
+                      }
+                      else if (response.result) {setError(false)}
+                      console.log(response );
+                    }}
                   >
                     ورود
                   </Button>
@@ -143,7 +170,6 @@ const LoginPage = () => {
         </Grid>
       </Grid>
     </Grid>
-
   );
 };
 
