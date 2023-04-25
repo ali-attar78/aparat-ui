@@ -19,6 +19,8 @@ import DrawerButton from '../DrawerButton';
 const StyledWrapper = styled.div`
   flexgrow: 1;
   color: #6f7285;
+  position: relative;
+  z-index: 50;
 
   & .MuiAppBar-root {
     background: #fff;

@@ -3,6 +3,7 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   direction: 'rtl',
+
     palette: {
       primary: {
         main: '#3f51b5',
@@ -16,7 +17,7 @@ const theme = createTheme({
     },
     typography: {
       fontFamily: 'IRANSans, Roboto, Helvetica, Arial, sans-serif',
-      fontSize: 13,
+      fontSize: 11,
     },
     overrides: {
       MuiPaper: {
