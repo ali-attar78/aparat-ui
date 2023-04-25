@@ -20,8 +20,8 @@ class AuthService {
     try {
       const response = await request.post(endpoint, data);
       setAuth(response.data);
-
-      return response.data;
+      result = response.data;
+      
     } catch (ex) {
       if(ex.response && ex.response.status===400){
         console.log("ورود ناموفق");
@@ -31,8 +31,10 @@ class AuthService {
         console.log("هر خطایی");
 
       }
-      return { result, error };
     }
+    
+    return { result, error };
+
   }
 }
 

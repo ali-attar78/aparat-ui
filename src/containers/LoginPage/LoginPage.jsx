@@ -17,22 +17,25 @@ import { useState } from "react";
 import dump from "../../components/Dump/dump";
 import Alert from "../../components/Alert/alert";
 import auth_service from "../../services/auth-service";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("user1@aparat.me");
   const [password, setPassword] = useState("123456");
   const [messageError, setMessageError] = useState("");
   const [error, setError] = useState(false);
 
   const authService = auth_service();
-  let response ='';
+  let response = "";
 
   return (
-    <Grid container direction="row" justifyContent="center" alignItems="center" >
+    <Grid container direction="row" justifyContent="center" alignItems="center" padding='10px'>
       <Helmet>
         <title>صفحه ورود آپارات</title>
+        <meta name="login" content="login page"/>
       </Helmet>
-      <Grid item xs={12} sm={8} md={6} lg={5} style={{ margin: "12px"}}>
+      <Grid item xs={12} sm={8} md={6} lg={5} style={{ margin: "12px" }}>
         <Grid item xs={12}>
           <Logo />
         </Grid>
@@ -48,8 +51,13 @@ const LoginPage = () => {
           </Button>
         </Grid>
         <Grid item xs={12} marginTop={2}>
-
-         {error ? <Alert show={error} message={messageError} onClose={()=>setError(false)} /> : null}
+          {error ? (
+            <Alert
+              show={error}
+              message={messageError}
+              onClose={() => setError(false)}
+            />
+          ) : null}
 
           <Card>
             <Grid
@@ -68,7 +76,7 @@ const LoginPage = () => {
                   color="danger"
                   variant="contained"
                   fullWidth
-                  style={{ color: "#ffff",marginBottom:'10px' }}
+                  style={{ color: "#ffff", marginBottom: "10px" }}
                 >
                   ایجاد حساب کاربری
                 </Button>
@@ -106,7 +114,6 @@ const LoginPage = () => {
                         placeholder="ایمیل یا موبایل را وارد کنید"
                         onChange={(e) => setUsername(e.target.value.trim())}
                         defaultValue={username}
-
                       />
                     </Paper>
 
@@ -140,10 +147,11 @@ const LoginPage = () => {
                     color="danger"
                     fullWidth
                     style={{ color: "#ffff" }}
-                    onClick={async () => { 
-
-                      if(!username || !password) {
-                        setMessageError("لطفا شماره تلفن/ایمیل و پسورد خود را وارد کنید")
+                    onClick={async () => {
+                      if (!username || !password) {
+                        setMessageError(
+                          "لطفا شماره تلفن/ایمیل و پسورد خود را وارد کنید"
+                        );
                         setError(true);
                         return;
                       }
@@ -156,9 +164,11 @@ const LoginPage = () => {
                       if (response.error) {
                         setMessageError("اطلاعات وارد شده مطابقت ندارد");
                         setError(true);
+                      } else if (response.result) {
+                        setError(false);
+                        navigate("/dashboard");
                       }
-                      else if (response.result) {setError(false)}
-                      console.log(response );
+                      console.log(response.result);
                     }}
                   >
                     ورود
