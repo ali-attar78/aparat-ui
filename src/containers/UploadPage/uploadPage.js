@@ -9,21 +9,21 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { Grid, Typography } from "@mui/material";
 import UploadIcon from "@mui/icons-material/CloudUpload";
-import UpCloudIcon from "@mui/icons-material/CloudQueue";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-import { FileDrop } from "react-file-drop";
+
+import FileUploadForm from "./FileUploadForm";
+import FileUploadProgress from "./FileUploadProgress";
+import FileUploadInfo from "./FileUploadInfo";
+
+
 
 import Layout from "../../layouts/DashboardLayout/dashboardLayout";
-import { FormatAlignJustify } from "@mui/icons-material";
 
 const UploadWrapper = styled(Grid)`
-  max-width: 600px;
+  max-width: 700px;
   margin: auto;
 
   
-
-
   & .topTitleBar {
     border-bottom: 1px solid #ddd;
     height: 30px;
@@ -55,63 +55,23 @@ const UploadWrapper = styled(Grid)`
     margin: 0 5px;
   }
 
-  & .fileDrop {
-    position: relative;
-    border: 2px dashed #ddd;
-    margin: 25px 0;
-    padding: 25px;
-    height: 150px;
+  & .videoUploadInfoWrapper {
+    background: #f7f7f7;
+    border-radius: 3px;
+    box-shadow: 0 0 3px #dadada;
+    padding: 1rem;
   }
 
-  & .fileDrop .MuiSvgIcon-root {
-    position: absolute;
-    left: 30px;
-    top: -10px;
-    color: #cfcfcf;
-    font-size: 160px;
-    height: 100%;
-  }
+ 
 
-  & .fileDrop .MuiSvgIcon-root.upArrowIcon {
-    font-size: 120px;
-    left: 48px;
-    top: 16px;
-  }
-
-  & .fileDrop > div,
-  & .fileDrop b {
-    display: block;
-    width: 300px;
-    text-align: center;
-    color: #ccc;
-    font-size: 1.2rem;
-  }
-
-  & .fileDrop b {
-    margin-bottom: 10px;
-  }
-
-  & .fileDrop .fileDropTitle {
-    color: #6a6a6a;
-  }
-
-  & .fileDrop button {
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: #757575;
-    border: 1px solid #cbcbcb;
-    background: #fff;
-    border-radius: 2px;
-    padding: 5px 15px;
-  }
 `;
 
+
+
+
 export function UploadPage() {
-  const handleDrop = (files) => {
-    if (files) {
-      console.log(files);
-    }
-  };
+
+
 
   return (
     <Layout showSidebar={false} >
@@ -131,17 +91,15 @@ export function UploadPage() {
         </Grid>
 
         <Grid item xs={12} >
-          <FileDrop onDrop={handleDrop} className="fileDrop">
-            <div >
-              <b className="fileDropTitle">فایل خود را اینجا بکشید</b>
-              <b>یا</b>
-              <button type="button">انتخاب فایل</button>
-            </div>
-
-            <UpCloudIcon />
-            <ArrowUpwardIcon className="upArrowIcon" />
-          </FileDrop>
+        <FileUploadForm  />
         </Grid>
+
+        <Grid item xs={12} className="videoUploadInfoWrapper" >
+        <FileUploadProgress  />
+        <FileUploadInfo  />
+
+        </Grid>
+        
       </UploadWrapper>
     </Layout>
   );

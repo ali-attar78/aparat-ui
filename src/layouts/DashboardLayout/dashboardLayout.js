@@ -38,8 +38,10 @@ function DashboardLayout({ children, showSidebar }) {
       <NavBar toggleDrawer={toggleDrawer} />
       <SidebarDrawer isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
 
-      <Grid container style={!showSidebar ? { justifyContent: 'center' } : null}>
-
+      <Grid
+        container
+        style={!showSidebar ? { justifyContent: "center" } : null}
+      >
         {showSidebar ? (
           <Grid item className="sidebarWrapper">
             <Sidebar />
