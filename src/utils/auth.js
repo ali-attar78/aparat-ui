@@ -12,6 +12,11 @@ export function getAuth() {
   return null;
 }
 
+export function isAdminUser() {
+  const authData = getAuth();
+  return !!(authData && authData.user.type === 'admin');
+}
+
 export default {
   getAuth,
   setAuth,

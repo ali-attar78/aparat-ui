@@ -1,3 +1,79 @@
+.btn {
+  border-radius: 15px;
+  padding: 0.7em 1em;
+  margin: 0 0.2em;
+}
+
+.btn.btn-accept:not(:disabled) {
+  background: #05a3e8;
+  color: #fff;
+  margin-right: 3px;
+}
+
+.btn.btn-accept:not(:disabled):hover {
+  opacity: 0.8;
+}
+
+.btn.btn-cancel:not(:disabled) {
+  background: #df0f50;
+  color: #fff;
+}
+
+.btn.btn-cancel:not(:disabled):hover {
+  opacity: 0.8;
+}
+
+.input {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+  padding: 0.3em 0.7em;
+  width: 100%;
+  resize: none;
+}
+
+.inputGroup {
+  margin-bottom: 1.5em;
+}
+
+.inputGroup label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #484b62;
+}
+
+.inputGroup.hasAppend {
+  position: relative;
+}
+
+.inputGroup.hasAppend .MuiInputBase-root > input {
+  padding-left: 5.2em;
+}
+
+.inputGroup.hasAppend .append {
+  position: absolute;
+  left: -3px;
+  height: 3.35em;
+  border-radius: 0.5em !important;
+  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  width: 6em;
+}
+
+.text-left,
+.text-left input {
+  text-align: left;
+  direction: ltr;
+}
+
+
+
+
+
+
+
+
 
 
 @font-face {
@@ -82,6 +158,10 @@
     url('./assets/fonts/woff/IRANSansWeb.woff') format('woff'),
     /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('./assets/fonts/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+.hidden{
+  display: none;
 }
 
 body {

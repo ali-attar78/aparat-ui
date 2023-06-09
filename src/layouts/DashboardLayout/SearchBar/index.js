@@ -8,9 +8,11 @@ import React, { memo, useState } from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { IconButton } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import { ROUTE_HOME } from '../../../routes';
 
 
 
@@ -79,6 +81,12 @@ const StyledWrapper = styled.div`
 function SearchBar() {
   const [active, setActive] = useState(false);
   const [searchText, setsearchText] = useState('');
+  const navigate=useNavigate();
+
+
+  function handleSearch() {
+    navigate(`${ROUTE_HOME}?search=${searchText.trim()}`);
+  }
 
   return (
     <StyledWrapper className={active ? 'active' : ''}>
@@ -90,13 +98,16 @@ function SearchBar() {
         value={searchText}
         maxLength={70}
         placeholder="جستجوی ویدیو ها و کانال ها..."
+        onKeyDown={e => {
+          if (e.keyCode === 13) handleSearch();
+        }}
       />
 
       {searchText && (
         <ClearIcon className="clearIcon" onClick={() => setsearchText('')} />
       )}
 
-      <IconButton size="small">
+      <IconButton size="small" onClick={handleSearch}>
         <SearchIcon className='serchIcon'/>
       </IconButton>
     </StyledWrapper>

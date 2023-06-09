@@ -1,14 +1,12 @@
-import {React,memo} from 'react'
+import { React, memo, useState } from "react";
 import UpCloudIcon from "@mui/icons-material/CloudQueue";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { FileDrop } from "react-file-drop";
 import uploadVideoService from "../../../services/upload_video_service/upload-video-service";
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 const Wrapper = styled.div`
-
-& .fileDrop {
+  & .fileDrop {
     position: relative;
     border: 2px dashed #ddd;
     margin: 25px 0;
@@ -59,105 +57,104 @@ const Wrapper = styled.div`
     padding: 5px 15px;
   }
 
-
-  & [type='file'] {
+  & [type="file"] {
     display: none;
   }
 
-
   @media (max-width: 550px) {
     & .fileDropTitle {
-      font-size:17px!important;
+      font-size: 17px !important;
     }
 
     & .fileDrop b {
-      text-align: start !important; 
-    
+      text-align: start !important;
     }
-    & .textDiv{
-      text-align: start !important; 
-
+    & .textDiv {
+      text-align: start !important;
     }
   }
-  
 `;
 
-const FileUploadForm = () => {
+const FileUploadForm = ({ onUploadProgress, onFileExist,onVideoUploadId }) => {
+  const uploadVideoServiceInstance = uploadVideoService();
 
-    const uploadVideoServiceInstance = uploadVideoService();
+  let response;
+  let fileSelectorRef = null;
 
-    let response;
-    let fileSelectorRef = null;
-  
-    const handleDrop = async files => {
-      if (files) {
-        const file = files[0];
-        if (file.type !== 'video/mp4') {
-          return alert('فقط فایل های ویدیوو با پسوند mp4 را انتخاب کنید');
-        }
-  
-        if (file.size < 100 || file.size > 100000000) {
-          return alert('حجم ویدیو انتخاب شده مناسب نیست');
-        }
-        try {
-          response = await uploadVideoServiceInstance.Upload(
-            file,
-            "/video/upload"
-          );
-          if(response.result){
-            console.log(response.result);
-          }
-          else if(response.error){
-            alert('شما دسترسی به این بخش ندارید');
-          }
-        } catch (error) {
-          console.log(error);
-          alert('خطایی در بارگذاری ویدیو رخ داده است.');
-        }
+  const handleUploadProgress = (progressEvent) => {
+    const percentCompleted = Math.round(
+      (progressEvent.loaded * 100) / progressEvent.total
+    );
+    // call the callback function with the new progress value
+    onUploadProgress(percentCompleted);
+  };
+
+  const handleDrop = async (files, event) => {
+    event.preventDefault();
+    if (files) {
+      const file = files[0];
+      if (file.type !== "video/mp4") {
+        return alert("فقط فایل های ویدیوو با پسوند mp4 را انتخاب کنید");
       }
-  
-      return false;
-    };
-  
-    const whantToSelectFile = () => {
-      fileSelectorRef.click();
-    };
-  
-    const onSelectFileFromFileSelector = e => handleDrop(e.target.files);
-  
-  
+
+      if (file.size < 100 || file.size > 100000000) {
+        return alert("حجم ویدیو انتخاب شده مناسب نیست");
+      }
+      try {
+        onFileExist(true);
+        response = await uploadVideoServiceInstance.Upload(
+          file,
+          "/video/upload",
+          handleUploadProgress // pass the progress callback function
+        );
+        if (response.result) {
+          onVideoUploadId(response.result.video);
+          console.log(response.result);
+        } else if (response.error) {
+          console.log(response.error);
+          alert("شما دسترسی به این بخش ندارید");
+        }
+      } catch (error) {
+        alert("خطایی در بارگذاری ویدیو رخ داده است.");
+      }
+    }
+
+    return false;
+  };
+
+  const whantToSelectFile = () => {
+    fileSelectorRef.click();
+  };
+
+  const onSelectFileFromFileSelector = (e) => {
+      handleDrop(e.target.files,e);
+  };
 
   return (
-
     <Wrapper>
+      <FileDrop onDrop={(files, event) => handleDrop(files, event)} className="fileDrop">
+        <div className="textDiv">
+          <b className="fileDropTitle">فایل خود را اینجا بکشید</b>
+          <b>یا</b>
 
+          <button type="button" onClick={whantToSelectFile}>
+            انتخاب فایل
+          </button>
 
-<FileDrop onDrop={handleDrop} className="fileDrop">
-            <div className="textDiv">
-              <b className="fileDropTitle">فایل خود را اینجا بکشید</b>
-              <b>یا</b>
+          <input
+            type="file"
+            ref={(el) => {
+              fileSelectorRef = el;
+            }}
+            onChange={onSelectFileFromFileSelector}
+          />
+        </div>
 
-              <button type="button" onClick={whantToSelectFile}>
-                انتخاب فایل
-              </button>
+        <UpCloudIcon className="cloudIcon" />
+        <ArrowUpwardIcon className="upArrowIcon" />
+      </FileDrop>
+    </Wrapper>
+  );
+};
 
-              <input
-                type="file"
-                ref={el => {
-                  fileSelectorRef = el;
-                }}
-                onChange={onSelectFileFromFileSelector}
-              />
-            </div>
-
-            <UpCloudIcon className="cloudIcon"/>
-            <ArrowUpwardIcon className="upArrowIcon" />
-          </FileDrop>
-
-</Wrapper>
-
-
-    )
-}
-
-export default memo(FileUploadForm)
+export default memo(FileUploadForm);

@@ -14,10 +14,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import EastIcon from "@mui/icons-material/East";
 import PasswordIcon from "@mui/icons-material/VpnKey";
 import { useState } from "react";
-import dump from "../../components/Dump/dump";
 import Alert from "../../components/Alert/alert";
 import auth_service from "../../services/auth-service";
 import { useNavigate } from "react-router-dom";
+
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const LoginPage = () => {
   let response = "";
 
   return (
-    <Grid container direction="row" justifyContent="center" alignItems="center" padding='10px'>
+    <Grid container direction="row" justifyContent="center" alignItems="center" padding='10px' className="mainGrid">
       <Helmet>
         <title>صفحه ورود آپارات</title>
         <meta name="login" content="login page"/>

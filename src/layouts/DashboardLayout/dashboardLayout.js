@@ -15,18 +15,36 @@ import Sidebar from "./Sidebar";
 
 const StyledDashboardWrapper = styled.div`
   background: #fefefe;
+  color: #6f7285;
 
   & .sidebarWrapper {
     z-index: 0;
     padding-bottom: 0px !important;
+    position: relative;
   }
 
   & .contentWrapper {
-    padding: 0 15px;
+    flex: 1;
+    max-width: 100%;
+    padding-top: 2em;
+    padding: 15px 150px;
+    margin: auto;
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    background-color: #fbfbfbc2;
+
+  }
+
+  @media (max-width: 955px) {
+    & .contentWrapper {
+      padding: 25px;
+    }
   }
 `;
 
-function DashboardLayout({ children, showSidebar }) {
+function DashboardLayout({ children, showSidebar, style }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -47,7 +65,7 @@ function DashboardLayout({ children, showSidebar }) {
             <Sidebar />
           </Grid>
         ) : null}
-        <Grid item className="contentWrapper">
+        <Grid item className="contentWrapper" style={{ style } ? style : null}>
           {children}
         </Grid>
       </Grid>

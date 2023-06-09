@@ -24,10 +24,37 @@ const Wrapper = styled.div`
     width: 100%;
   }
 
+  
+ .MuiInputBase-formControl .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input {
+  border: 1px solid #ccc;
+}
+
+  label + .css-14ftp9k-MuiInputBase-root-MuiInput-root {
+    margin-top: 0px;
+  }
+
+  .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input.MuiSelect-select{
+
+    height: auto;
+    min-height: 36px;
+    padding-top: 10px;
+
+  }
+
+  & label + .MuiInput-formControl {
+    margin-top: 0;
+  }
+
+  & .MuiInput-underline:after,
+  & .MuiInput-underline:before {
+    display: none;
+  }
+
   & .MuiSelect-selectMenu {
     border: 1px solid #c4c4c4;
     border-radius: 4px;
     background: #fff;
+    padding: 12px;
   }
 
   & .chips {
@@ -81,7 +108,7 @@ const addTag = createAddTag();
 
 
 
-function SelectBox({ value, label, max, onChange }) {
+function SelectBox({ value, label, max, onChange ,...props}) {
   const [selectedItems, setSelectedItems] = useState(value || []); // set default value to empty array
   const [options, setOptions] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -100,9 +127,19 @@ function SelectBox({ value, label, max, onChange }) {
   }, []);
 
 
-   async function createTag() {
+  async function createTag() {
     const response = await addTag.addTag(searchText,"/tag/create");
     console.log(response);
+    
+    // Update options with the new tag
+    const newTag = response.result;
+    setOptions(prevOptions => [...prevOptions, newTag]);
+  
+    // Select the new tag
+    setSelectedItems(prevSelectedItems => [...prevSelectedItems, newTag.id]);
+  
+    // Clear the input field
+    setSearchText('');
   }
 
   function handleChange(e) {
@@ -125,9 +162,9 @@ function SelectBox({ value, label, max, onChange }) {
       return "";
     }
     if (typeof option === "number" && (options && Array.isArray(options))) {
-      return options.filter(item => item.id === option)[0].title;  
-      }
-   
+      const item = options.find(item => item.id === option);
+      return item ? item.title : "";
+    }
     return "";
   };
 
@@ -175,6 +212,7 @@ function SelectBox({ value, label, max, onChange }) {
         <Select
           multiple
           displayEmpty
+          {...props}
           value={selectedItems}
           input={<Input id="select-multiple-chip" />}
           renderValue={selected => (

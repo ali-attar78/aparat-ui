@@ -32,7 +32,7 @@ function DrawerButton({ toggleDrawer }) {
 }
 
 DrawerButton.propTypes = {
-  toggleDrawer: PropTypes.func.isRequired,
+  toggleDrawer: PropTypes.func,
 };
 
 export default 
