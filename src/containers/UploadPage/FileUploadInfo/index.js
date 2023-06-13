@@ -15,6 +15,7 @@ import TagSelectBox from "../../../components/TagSelectBox";
 import CategorySelectBox from "../../../components/CategorySelectBox";
 import PlayListSelectBox from "../../../components/PlayListSelectBox";
 import CreateVideoService from "../../../services/AddVideo/addVideo";
+import PublishLaterModal from "../PublishLaterModal";
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
   & .formButton {
     min-width: 700px;
   }
- 
+
   & .tabs {
     border-bottom: 1px solid #ddd;
 
@@ -35,16 +36,17 @@ const Wrapper = styled.div`
   & .tabContent {
     padding: 1rem;
   }
- 
-  .fsDILh .MuiInputBase-formControl .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input {
+
+  .fsDILh
+    .MuiInputBase-formControl
+    .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input {
     border: none;
-}
+  }
 
-.fsDILh .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input.MuiSelect-select {
-  
-   padding-top: 3px; 
-}
-
+  .fsDILh
+    .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input.MuiSelect-select {
+    padding-top: 3px;
+  }
 
   & .inputWrapper {
     margin-bottom: 1rem;
@@ -85,10 +87,12 @@ const Wrapper = styled.div`
   }
 `;
 
-function FileUploadInfo({ videoUploadId ,BannerUploaded , onVideoData}) {
+function FileUploadInfo({ videoUploadId, BannerUploaded, onVideoData }) {
   let response;
   const addVideoService = CreateVideoService();
   const [selectedTab, setSelectedTab] = useState(0);
+  const [showPublishLaterModal, setShowPublishLaterModal] = useState(false);
+
   const [data, setData] = useState({
     video_id: null,
     title: "عنوان ویدیو",
@@ -112,24 +116,36 @@ function FileUploadInfo({ videoUploadId ,BannerUploaded , onVideoData}) {
     }
   }, [BannerUploaded]);
 
-
   function changeData(key, value) {
     setData({ ...data, [key]: value });
   }
 
-  async function handlePublish() {
-  try {
-    const response = await addVideoService.addVideo(data, "/video");
-    onVideoData(response.result.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
+  async function handlePublish(laterData) {
+    let myData = laterData ?? data;
+    try {
+      const response = await addVideoService.addVideo(
+        myData,
+        "/video"
+      );
 
-  function handlePublishLater() {
-    // TODO این قسمت هنوز انجام نشده
-    // eslint-disable-next-line no-alert
-    alert("handle publish later");
+      onVideoData(response.result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  
+
+  function handlePublishLater(date) {
+    togglePublishLaterModal(false);
+    console.log({ ...data, publish_at: date });
+    handlePublish({ ...data, publish_at: date });
+  }
+
+  function togglePublishLaterModal(value = undefined) {
+    setShowPublishLaterModal(
+      value === undefined ? !showPublishLaterModal : value
+    );
   }
 
   return (
@@ -268,8 +284,7 @@ function FileUploadInfo({ videoUploadId ,BannerUploaded , onVideoData}) {
           variant="contained"
           size="large"
           className="btn btn-publish-later"
-          onClick={handlePublishLater}
-        >
+          onClick={togglePublishLaterModal}        >
           ذخیره بعدا منتشر میکنم
         </Button>
 
@@ -279,11 +294,18 @@ function FileUploadInfo({ videoUploadId ,BannerUploaded , onVideoData}) {
           variant="contained"
           size="large"
           className="btn btn-publish"
-          onClick={handlePublish}
+          onClick={()=>{handlePublish(null)}}
         >
           انتشار ویدیو
         </Button>
       </Grid>
+
+      {showPublishLaterModal && (
+        <PublishLaterModal
+          onClose={() => togglePublishLaterModal(false)}
+          onOk={handlePublishLater}
+        />
+      )}
     </Wrapper>
   );
 }

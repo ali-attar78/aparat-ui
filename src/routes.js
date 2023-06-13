@@ -14,5 +14,7 @@ export const ROUTE_MY_PROFILE = '/user/profile';
 export const ROUTE_MY_PROFILE_BANNER = '/user/profile/banner';
 export const ROUTE_MY_PROFILE_CATEGORIES = '/user/profile/categories';
 export const ROUTE_MY_PROFILE_UNREGISTER = '/user/profile/unregister';
+export const ROUTE_MANAGE_VIDEOS = '/dashboard/manage-videos';
+export const ROUTE_MANAGE_USERS = '/dashboard/manage-users';
 
 

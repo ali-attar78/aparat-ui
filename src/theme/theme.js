@@ -11,8 +11,14 @@ const theme = createTheme({
       danger: {
         main: '#E50057',
       },  
+      info: {
+        main: '#6B6B6B',
+      }, 
       gray: {
         main: '#6B6B6B',
+      }, 
+      error: {
+        main: '#E50057',
       }, 
     },
     typography: {

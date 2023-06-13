@@ -30,34 +30,34 @@ function VideoList({ filterValue }) {
     async function fetchVideos() {
       try {
         const response = await getVideoList.getVideoList("/video");
-        console.log(response);
+        console.log(response.result.data);
         switch (filterValue) {
           case "unpublished":
             console.log(
-              response.result.filter(
+              response.result.data.filter(
                 (video) => video.state === VIDEO_STATE_BLOCKED
               )
             );
             setVideoList(
-              response.result.filter(
+              response.result.data.filter(
                 (video) => video.state === VIDEO_STATE_BLOCKED
               )
             );
             break;
           case "playlist":
             setVideoList(
-              response.result.filter(
+              response.result.data.filter(
                 (video) => video.playlist && video.playlist.length
               )
             );
             break;
 
           case "republish":
-            setVideoList(response.result.filter((video) => video.republished));
+            setVideoList(response.result.data.filter((video) => video.republished));
             break;
 
           default:
-            setVideoList(response.result);
+            setVideoList(response.result.data);
             break;
         }
       } catch (error) {

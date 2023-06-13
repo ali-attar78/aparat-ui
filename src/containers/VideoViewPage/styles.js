@@ -29,6 +29,7 @@ export const VideoInfoWrapper = styled.div`
   }
 
   .Row {
+    margin: 7px 0px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

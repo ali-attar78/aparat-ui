@@ -11,9 +11,13 @@ import * as routes from "../../../routes";
 // import PropTypes from 'prop-types';
 import styled from "styled-components";
 
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText,Divider } from "@mui/material";
+import {SupervisorAccountOutlined,MovieOutlined} from "@mui/icons-material"
 
 import LogoutService from "../../../services/LogoutApi/LogoutApi";
+
+import {isAdminUser} from "../../../utils/auth";
+
 
 import SettingIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -137,6 +141,7 @@ function Sidebar() {
   const { pathname } = location;
   const LogoutApi = LogoutService();
   const [responseError,setResponseError]=useState(null);
+  const isAdmin = isAdminUser();
 
   
   async function handleLogout() {
@@ -183,7 +188,7 @@ function Sidebar() {
             />
           </ListItemIcon>
           <ListItemText
-            primary={JSON.parse(localStorage.getItem("auth")).user.name}
+            primary={JSON.parse(localStorage.getItem("auth")).user.channel.name}
             onClick={() =>
               navigate(
                 `/channel/${JSON.parse(localStorage.getItem("auth")).user.channel.name}`
@@ -202,6 +207,42 @@ function Sidebar() {
           </ListItemIcon>
           <ListItemText primary="داشبرد" />
         </ListItem>
+
+
+        {isAdmin && <Divider />}
+
+        {isAdmin && (
+          <ListItem
+            button
+            selected={routes.ROUTE_MANAGE_USERS === pathname}
+            onClick={() => navigate(routes.ROUTE_MANAGE_USERS)}
+          >
+            <ListItemIcon>
+              <SupervisorAccountOutlined />
+            </ListItemIcon>
+            <ListItemText primary="مدیریت کاربران" />
+          </ListItem>
+        )}
+
+        {isAdmin && (
+          <ListItem
+            button
+            selected={routes.ROUTE_MANAGE_VIDEOS === pathname}
+            onClick={() => navigate(routes.ROUTE_MANAGE_VIDEOS)}
+          >
+            <ListItemIcon>
+              <MovieOutlined />
+            </ListItemIcon>
+            <ListItemText primary="مدیریت ویدیو ها" />
+          </ListItem>
+        )}
+
+        {isAdmin && <Divider />}
+
+
+
+
+
 
         <ListItem
           button

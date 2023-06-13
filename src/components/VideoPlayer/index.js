@@ -4,8 +4,8 @@
  *
  */
 
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
+import React, { memo } from "react";
+import PropTypes from "prop-types";
 
 import "../../../node_modules/video-react/dist/video-react.css";
 
@@ -17,8 +17,8 @@ import {
   PlaybackRateMenuButton,
   ForwardControl,
   ReplayControl,
-} from 'video-react';
-import { VideoPlayerWrapper } from './styles';
+} from "video-react";
+import { VideoPlayerWrapper } from "./styles";
 
 function VideoPlayer({ video }) {
   return (

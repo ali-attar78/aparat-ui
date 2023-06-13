@@ -1,14 +1,7 @@
-import { useLocation } from 'react-router-dom';
+import { DatePicker } from "@kasraghoreyshi/datepicker";
+import "@kasraghoreyshi/calendar/styles.css";
+import "@kasraghoreyshi/datepicker/styles.css";
 
-function MyComponent() {
-  const location = useLocation();
-  const { pathname } = location;
-
-  return (
-    <div>
-      <p>The current URL path is: {pathname}</p>
-    </div>
-  );
+export default function Example() {
+  return <DatePicker />;
 }
-
-export default MyComponent;

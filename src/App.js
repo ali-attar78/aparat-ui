@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Blogs from "./containers/Blogs";
 import LoginPage from "./containers/LoginPage/LoginPage";
 import NotFoundPage from "./containers/NotFoundPage/notFoundPage";
-import DashboardPage from "./containers/DashboardPage";
 import { UploadPage } from './containers/UploadPage/uploadPage';
 import * as routes from './routes';
 import MyVideosPage from './containers/MyVideosPage/index';
@@ -15,8 +14,13 @@ import { MyChannelPage } from './containers/MyChannelPage/index';
 import { UserProfilePage } from './containers/UserProfilePage/index';
 import HomePage from './containers/HomePage/index';
 import { VideoViewPage } from './containers/VideoViewPage/index';
+import { DashboardPage } from './containers/DashboardPage/index';
+import { ManageUsersPage } from './containers/ManageUsersPage/index';
+import { ManageVideosPage } from './containers/ManageVideosPage/index';
+
 
 export default function App() {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -38,13 +42,11 @@ export default function App() {
         <Route path={routes.ROUTE_MY_PROFILE_CATEGORIES} element={<UserProfilePage />} />
         <Route path={routes.ROUTE_MY_PROFILE_UNREGISTER} element={<UserProfilePage />} />
         <Route path={routes.ROUTE_VIDEO_VIEW} element={<VideoViewPage />} />
-
-
-
-
-
+        <Route path={routes.ROUTE_MANAGE_USERS} element={<ManageUsersPage />} />
+        <Route path={routes.ROUTE_MANAGE_VIDEOS} element={<ManageVideosPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
+        
       </Routes>
     </BrowserRouter>
   );

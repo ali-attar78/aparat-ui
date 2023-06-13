@@ -2,10 +2,11 @@ import React, { memo, useState, useEffect } from "react";
 
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { InputBase, Button,Snackbar,Alert } from "@mui/material";
+import { InputBase, Button, Snackbar, Alert } from "@mui/material";
 
 import UpdateChannelInfoService from "../../../services/UpdateChannelInfoApi/UpdateChannelInfoApi";
 import UpdateSocialsChannelService from "../../../services/UpdateSocialsChannelApi/UpdateSocialsChannelApi";
+import Notification from "../../../components/Notifications";
 
 import ChangeUserInfoModal from "../../../components/ChangeUserInfoModal";
 
@@ -26,24 +27,6 @@ const ChannelInfoTabWrapper = styled.div`
   }
 `;
 
-
-const Notification = ({ message, severity, onClose }) => {
-  return (
-    <Snackbar
-      open={!!message}
-      autoHideDuration={3000}
-      onClose={onClose}
-    >
-      {message && (
-        <Alert severity={severity} onClose={onClose}>
-          {message}
-        </Alert>
-      )}
-    </Snackbar>
-  );
-};
-
-
 function ChannelInfoTab({}) {
   const [data, setData] = useState(null);
   const UpdateChannelInfoApi = UpdateChannelInfoService();
@@ -52,7 +35,6 @@ function ChannelInfoTab({}) {
   const [showChangeUserInfoModal, setShowChangeUserInfoModal] = useState(null);
 
   const [changedValueFromModal, setChangedValueFromModal] = useState(null);
-
 
   const [updateChannelInfo, setUpdateChannelInfo] = useState(null);
   const [errorUpdateChannelInfo, setErrorUpdateChannelInfo] = useState(null);
@@ -84,7 +66,6 @@ function ChannelInfoTab({}) {
 
         setUpdateChannelInfo(response.result);
         setSuccessMessage("کانال با موفقیت به روز رسانی شد");
-
       }
     } catch (error) {
       console.error(error);
@@ -243,10 +224,7 @@ function ChannelInfoTab({}) {
           ))}
         </div>
 
-        <Button
-          className="btn btn-accept"
-          onClick={handleSaveChangesSocials}
-        >
+        <Button className="btn btn-accept" onClick={handleSaveChangesSocials}>
           ثبت تغییرات
         </Button>
       </div>
@@ -324,13 +302,13 @@ function ChannelInfoTab({}) {
           type={showChangeUserInfoModal}
           value={data[showChangeUserInfoModal]}
           onClose={() => setShowChangeUserInfoModal(null)}
-          onChangeValue={(newValue) => setChangedValueFromModal(newValue) }
+          onChangeValue={(newValue) => setChangedValueFromModal(newValue)}
           onSuccess={(text) => setSuccessMessage(text)}
           onError={(txt) => setErrorMessage(txt)}
         />
       )}
 
-<Notification
+      <Notification
         message={successMessage || errorMessage}
         severity={successMessage ? "success" : "error"}
         onClose={() => {

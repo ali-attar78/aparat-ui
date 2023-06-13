@@ -60,7 +60,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     left: 10px;
     right: 10px;
-    top: 20px;
+    top: 13px;
   }
 
   @media (min-width: 600px) {

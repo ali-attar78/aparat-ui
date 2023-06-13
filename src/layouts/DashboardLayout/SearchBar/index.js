@@ -39,8 +39,7 @@ const StyledWrapper = styled.div`
     border: none;
     outline: none;
     width: 100%;
-    padding: 5px;
-    padding-left: 45px;
+    padding: 0px 7px 0px 48px;
     background: transparent;
     color: inherit;
   }
