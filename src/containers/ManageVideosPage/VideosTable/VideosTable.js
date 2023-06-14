@@ -47,7 +47,7 @@ const columns = [
 // eslint-disable-next-line no-unused-vars
 function VideosTable({ videos, page, size, total, onChangePage, onRowClick }) {
 
-  function handleChangePage(newPage) {
+  function handleChangePage(event,newPage) {
     onChangePage(newPage + 1, size);
   }
 

@@ -27,7 +27,14 @@ const CommentListWrapper = styled(Grid)`
   }
 `;
 
-function CommentList({ filterValue,myComments,customNotFoundTitle, showVideoImage,onPostNewAnswer,onRemoveComment }) {
+function CommentList({
+  filterValue,
+  myComments,
+  customNotFoundTitle,
+  showVideoImage,
+  onPostNewAnswer,
+  onRemoveComment,
+}) {
   const GetCommentListApi = GetCommentListService();
   const [newComment, setNewComment] = useState("");
   const [acceptComment, setAcceptComment] = useState("");
@@ -36,61 +43,59 @@ function CommentList({ filterValue,myComments,customNotFoundTitle, showVideoImag
   const [commentList, setCommentList] = useState({});
 
   useEffect(() => {
-    if(!myComments){
-    const fetchComments = async () => {
-      let myResult = {};
-      try {
-        const response = await GetCommentListApi.GetCommentList("/comment");
-        if (response.error) {
-          console.log(response.error);
-        } else {
-          response.result.forEach((item) => {
-            if (!item.parent_id) {
-              myResult[item.id] = {
-                ...item,
-                children: [],
-              };
-            } else {
-              myResult[item.parent_id].children.push(item);
-            }
-          });
-          console.log(myResult);
-
-          if (filterValue === "all") {
-            setCommentList(myResult);
+    if (!myComments) {
+      const fetchComments = async () => {
+        let myResult = {};
+        try {
+          const response = await GetCommentListApi.GetCommentList("/comment");
+          if (response.error) {
+            console.log(response.error);
           } else {
-            const filteredData = [];
+            response.result.forEach((item) => {
+              if (!item.parent_id) {
+                myResult[item.id] = {
+                  ...item,
+                  children: [],
+                };
+              } else {
+                myResult[item.parent_id].children.push(item);
+              }
+            });
+            console.log(myResult);
 
-            for (const item of Object.values(myResult)) {
-              const copiedItem = { ...item };
+            if (filterValue === "all") {
+              setCommentList(myResult);
+            } else {
+              const filteredData = [];
 
-              if (copiedItem.children && copiedItem.children.length) {
-                copiedItem.children = copiedItem.children.filter(
-                  (subItem) => subItem.state === COMMENT_STATE_PENDING
-                );
+              for (const item of Object.values(myResult)) {
+                const copiedItem = { ...item };
+
+                if (copiedItem.children && copiedItem.children.length) {
+                  copiedItem.children = copiedItem.children.filter(
+                    (subItem) => subItem.state === COMMENT_STATE_PENDING
+                  );
+                }
+
+                if (
+                  copiedItem.state === COMMENT_STATE_PENDING ||
+                  (copiedItem.children && copiedItem.children.length)
+                ) {
+                  filteredData.push(copiedItem);
+                }
               }
 
-              if (
-                copiedItem.state === COMMENT_STATE_PENDING ||
-                (copiedItem.children && copiedItem.children.length)
-              ) {
-                filteredData.push(copiedItem);
-              }
+              setCommentList(filteredData);
             }
-
-            setCommentList(filteredData);
           }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+      };
 
-    fetchComments();
-  }
+      fetchComments();
+    }
   }, [newComment, filterValue, acceptComment]);
-
-  
 
   const handleNewComment = (newComment) => {
     setNewComment(newComment);
@@ -108,18 +113,20 @@ function CommentList({ filterValue,myComments,customNotFoundTitle, showVideoImag
   return (
     <CommentListWrapper>
       {!!commentList &&
-        Object.values(myComments?myComments:commentList).map((comment) => (
+        Object.values(myComments ? myComments : commentList).map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
-            onPostNewComment={myComments?onPostNewAnswer:handleNewComment}
+            onPostNewComment={myComments ? onPostNewAnswer : handleNewComment}
             onAcceptComment={handleAcceptComments}
-            onRemoveComment={myComments?onRemoveComment:handleRemoveComments}
+            onRemoveComment={
+              myComments ? onRemoveComment : handleRemoveComments
+            }
             showVideoImage={showVideoImage}
           />
         ))}
 
-      {!commentList && <NoItemInList title={customNotFoundTitle} />}
+      {!!!commentList && <NoItemInList title="هیچ موردی یافت نشد" />}
     </CommentListWrapper>
   );
 }

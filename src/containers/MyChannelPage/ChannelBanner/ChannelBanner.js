@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import defaultBanner from "../../../assets/images/channelBanner.jpeg";
 
 export default styled.div`
-  background-image: url(${props => props.src});
+  background-image: url(${(props) => (props.src ? props.src : defaultBanner)});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

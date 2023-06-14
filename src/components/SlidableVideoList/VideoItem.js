@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -8,12 +8,42 @@ import { ROUTE_VIDEO_VIEW, ROUTE_MY_CHANNEL } from '../../routes';
 
 import { VideoItemWrapper, UserLink } from './styles';
 
-function VideoItem({ video, dispatch }) {
+function VideoItem({ video }) {
 
-  const navigate =useNavigate();
+  const navigate = useNavigate();
+  const videoRef = useRef(null);
+  const bannerRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVideoLoadingError, setIsVideoLoadingError] = useState(false);
+  const [isBannerLoadingError, setIsBannerLoadingError] = useState(false);
+
+  useEffect(() => {
+    if (isHovered) {
+      if (videoRef.current && !isVideoLoadingError) {
+        videoRef.current.play();
+      }
+    } else {
+      if (videoRef.current && !isVideoLoadingError) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
+  }, [isHovered, isVideoLoadingError]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.addEventListener('canplaythrough', handleVideoCanPlayThrough);
+      videoRef.current.addEventListener('timeupdate', handleVideoTimeUpdate);
+    }
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('canplaythrough', handleVideoCanPlayThrough);
+        videoRef.current.removeEventListener('timeupdate', handleVideoTimeUpdate);
+      }
+    };
+  }, []);
 
   function handleClick() {
-    // dispatch(push(ROUTE_VIDEO_VIEW.replace(':slug', video.slug)));
     navigate(ROUTE_VIDEO_VIEW.replace(':slug', video.slug));
   }
 
@@ -22,37 +52,69 @@ function VideoItem({ video, dispatch }) {
     e.stopPropagation();
     navigate(ROUTE_MY_CHANNEL.replace(':name', video.user.channel.name));
 
-    // dispatch(push(ROUTE_MY_CHANNEL.replace(':name', video.user.channel.name)));
+  }
+
+  function handleMouseEnter() {
+    setIsHovered(true);
+  }
+
+  function handleMouseLeave() {
+    setIsHovered(false);
+  }
+
+  function handleVideoCanPlayThrough() {
+    setIsVideoLoadingError(false);
+  }
+
+  function handleVideoTimeUpdate() {
+    if (videoRef.current && videoRef.current.currentTime >= videoRef.current.duration) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }
+
+  function handleVideoError() {
+    setIsVideoLoadingError(true);
+  }
+
+  function handleBannerError() {
+    setIsBannerLoadingError(true);
   }
 
   return (
-    <VideoItemWrapper onClick={handleClick}>
-      <img src={video.banner_link} alt={video.title} />
+    <VideoItemWrapper onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      {isHovered && !isVideoLoadingError ? (
+        <video ref={videoRef} autoPlay muted loop onError={handleVideoError}>
+          <source src={video.link} type="video/mp4" />
+        </video>
+      ) : !isBannerLoadingError ? (
+        <img ref={bannerRef} src={video.banner_link} alt={video.title} onError={handleBannerError} />
+      ) : (
+        <div>Error loading banner image</div>
+      )}
       <div className='videoContent'>
-      <span className="duration">{converSecondToTime(video.duration)}</span>
-      <h3 className="title" title={video.title}>
-        {video.title.substring(0, 50)}
-        {video.title.length > 50 ? '...' : ''}
-      </h3>
+        <span className="duration">{converSecondToTime(video.duration)}</span>
+        <h3 className="title" title={video.title}>
+          {video.title.substring(0, 50)}
+          {video.title.length > 50 ? '...' : ''}
+        </h3>
 
-      <UserLink className="user" onClick={handleRedirectToUserPage}>
-        {video.user.name}
-      </UserLink>
+        <UserLink className="user" onClick={handleRedirectToUserPage}>
+          {video.user.name}
+        </UserLink>
 
-      <b className="views">
-        <span>{video.views} بازدید</span>
-        {' - '}
-        <span>{getAge(video.age)}</span>
-      </b>
+        <b className="views">
+          <span>{video.views} بازدید</span>
+          {' - '}
+          <span>{getAge(video.age)}</span>
+        </b>
       </div>
     </VideoItemWrapper>
   );
 }
 
 VideoItem.propTypes = {
-  // video: PropTypes.object.isRequired,
-  // dispatch: PropTypes.func.isRequired,
+ 
 };
-
 
 export default memo(VideoItem);

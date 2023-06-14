@@ -38,7 +38,8 @@ const columns = [
 
 // eslint-disable-next-line no-unused-vars
 function UsersTable({ users, page, size, total, onChangePage, onRowClick }) {
-  function handleChangePage(newPage) {
+  function handleChangePage(event,newPage) {
+    console.log(newPage);
     onChangePage(newPage + 1, size);
   }
 

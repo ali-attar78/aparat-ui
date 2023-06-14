@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ITEM_WIDTH = 220;
 export const SlidableWrapper = styled.div`
@@ -16,7 +16,7 @@ export const SlidableWrapper = styled.div`
 
     .slideWrapperItems {
       display: inline;
-      width: ${props => props.itemsCount * ITEM_WIDTH}px;
+      width: ${(props) => props.itemsCount * ITEM_WIDTH}px;
     }
   }
 `;
@@ -29,13 +29,17 @@ export const VideoItemWrapper = styled.div`
   padding: 3px;
   cursor: pointer;
 
-
   > img {
     width: 100%;
     height: ${ITEM_WIDTH - 100}px;
   }
 
-  .videoContent{
+  > video {
+    width: 100%;
+    height: ${ITEM_WIDTH - 100}px;
+  }
+
+  .videoContent {
     margin: 5px 5px;
   }
 
@@ -60,7 +64,6 @@ export const VideoItemWrapper = styled.div`
   .user {
     color: #6f7285;
     font-size: 0.8em;
-
   }
 
   .views {

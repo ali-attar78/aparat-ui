@@ -80,6 +80,26 @@ const Wrapper = styled.div`
     }
   }
 
+  .inputTags {
+    margin-top: 0px;
+  }
+
+  label[data-shrink="false"]
+    + .MuiInputBase-formControl
+    .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input {
+    border: none;
+  }
+
+  .iIoxPr
+    .css-1ar2bnf-MuiSelect-select-MuiInputBase-input-MuiInput-input.MuiSelect-select {
+    padding-top: 2px;
+    border: none;
+  }
+
+  .iIoxPr .chip-empty {
+    padding: 9px 6px;
+  }
+
   @media (max-width: 730px) {
     & .formButton {
       min-width: 250px;
@@ -123,18 +143,13 @@ function FileUploadInfo({ videoUploadId, BannerUploaded, onVideoData }) {
   async function handlePublish(laterData) {
     let myData = laterData ?? data;
     try {
-      const response = await addVideoService.addVideo(
-        myData,
-        "/video"
-      );
+      const response = await addVideoService.addVideo(myData, "/video");
 
       onVideoData(response.result.data);
     } catch (error) {
       console.error(error);
     }
   }
-
-  
 
   function handlePublishLater(date) {
     togglePublishLaterModal(false);
@@ -209,7 +224,7 @@ function FileUploadInfo({ videoUploadId, BannerUploaded, onVideoData }) {
                 fullWidth
                 id="inp-category"
                 variant="outlined"
-                className="input"
+                className="input inputTags"
                 label="برچسپ ها"
                 max={10}
                 value={data.tags}
@@ -284,7 +299,8 @@ function FileUploadInfo({ videoUploadId, BannerUploaded, onVideoData }) {
           variant="contained"
           size="large"
           className="btn btn-publish-later"
-          onClick={togglePublishLaterModal}        >
+          onClick={togglePublishLaterModal}
+        >
           ذخیره بعدا منتشر میکنم
         </Button>
 
@@ -294,7 +310,9 @@ function FileUploadInfo({ videoUploadId, BannerUploaded, onVideoData }) {
           variant="contained"
           size="large"
           className="btn btn-publish"
-          onClick={()=>{handlePublish(null)}}
+          onClick={() => {
+            handlePublish(null);
+          }}
         >
           انتشار ویدیو
         </Button>
