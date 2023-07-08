@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+login page
+![FireShot Capture 054 - صفحه ورود آپارات - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/1cc3b035-88e0-463c-bde1-e0473f52de4e)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+register page
 
-## Available Scripts
+![FireShot Capture 055 - صفحه ورود آپارات - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/f19fb825-14bf-4a2e-9e3c-a848bbf65543)
+![FireShot Capture 056 - صفحه ورود آپارات - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/e6e218c2-f482-4f00-b82e-41791d3db6cb)
 
-In the project directory, you can run:
+home page
 
-### `npm start`
+![FireShot Capture 038 - صفحه اصلی - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/7cb5fa9a-e488-4332-bd09-e9fe50982f8f)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+video page
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![screencapture-localhost-3000-v-veEApDAgqd-2023-07-08-21_11_51](https://github.com/ali-attar78/aparat-ui/assets/83463146/b574a981-d8ca-46d4-9273-8422ab65337f)
 
-### `npm test`
+user dashboard manage videos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![FireShot Capture 063 - ویدیو های من - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/9997c079-cca7-4dbc-a331-703ecdea04ea)
 
-### `npm run build`
+user dashboard edit vodeo
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![FireShot Capture 064 - ویرایش ویدیو - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/6fd23bc7-1165-4502-8668-de11b804b5c0)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+video statistics page
 
-### `npm run eject`
+![screencapture-localhost-3000-video-veEApDAgqd-2023-07-08-21_15_13](https://github.com/ali-attar78/aparat-ui/assets/83463146/75301145-d6b9-45e4-a552-0ba4074138ff)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+ user dashboard manage comments
+ ![FireShot Capture 039 - نظرات - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/15d1222d-5b98-4670-90be-2a69f548da02)
 
-## Learn More
+ user followings and followers page
+ ![FireShot Capture 040 - کانالهای دنبال شده - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/4b9f0d3c-ef4d-4421-8961-87b7600cbd61)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ user cannel page
+ ![FireShot Capture 045 - کانال من - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/9bf508e5-ff28-415c-88fc-cffd0ff99439)
 
-### Code Splitting
+ user settings page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![FireShot Capture 046 - پروفایل کاربر - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/582d2ae1-30c8-4274-8620-54cd05126f53)
 
-### Analyzing the Bundle Size
+ ![FireShot Capture 047 - پروفایل کاربر - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/11f8ca7e-4d68-417c-9544-15444d27d05c)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+![FireShot Capture 048 - پروفایل کاربر - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/d6d85b17-b976-48a4-a4ff-d43b248362b8)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+upload video
+![FireShot Capture 049 - بارگذاری ویدیو - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/51e2e115-9bc7-417f-b445-8ba346297553)
+![FireShot Capture 050 - بارگذاری ویدیو - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/c9b8d230-1a1b-49fd-8f49-bdbb560ab3fd)
+![FireShot Capture 051 - بارگذاری ویدیو - localhost](https://github.com/ali-attar78/aparat-ui/assets/83463146/6de998d6-a3c1-4b8d-b4e8-6b6f7052c3d3)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
